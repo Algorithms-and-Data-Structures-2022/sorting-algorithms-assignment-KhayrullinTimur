@@ -1,76 +1,63 @@
-#include "assignment/partitioning.hpp"
+# Assignment 09. Sorting Algorithms
 
-#include <utility>  // swap
-#include <cassert>  // assert
+[![Build Status](../../actions/workflows/classroom.yml/badge.svg)](../../actions/workflows/classroom.yml)
+![Points bar](../../blob/badges/.github/badges/points-bar.svg)
 
-namespace assignment {
+## 1. Информация о студенте
 
-int median_of_three(const std::vector<int>& arr, int start, int stop) {
-assert(!arr.empty() && start >= 0 && stop < arr.size() && start <= stop);
+**Номер группы**: 11-109
 
-    // вычисляем размер области
-    const int size = stop - start + 1;
+**Фамилия и Имя**: Хайруллин Тимур
 
-    // В случае отсутствия как минимум 3 элементов в указанной области,
-    // возвращаем индекс правой границы.
-    if (size < 3) {
-      return stop;
-    }
+## 2. Описание задания
 
-    // вычисляем индекс середины заданной области
-    const int middle = middle_of(start, stop);
+Реализуйте алгоритмы сортировки Insertion Sort, Quick Sort, Heap Sort и Merge Sort.
 
-    // поиск медианы среди трех элементов по индексам start, middle и stop
-    if (arr[start] >= arr[middle] && arr[start] <= arr[stop] || arr[start] <= arr[middle] && arr[start] >= arr[stop]) {
-      return start;
-    }
-    if (arr[start] >= arr[middle] && arr[middle] >= arr[stop] || arr[start] <= arr[middle] && arr[middle] <= arr[stop]) {
-      return middle;
-    }
-    if (arr[start] <= arr[stop] && arr[middle] >= arr[stop] || arr[start] >= arr[stop] && arr[middle] <= arr[stop]) {
-      return middle;
-    }
-    // Здесь должна быть ваша реализация ...
+Insertion Sort:
+- Linear Search 
+- Binary Search
 
-    return -1 /* здесь что-то не так ... */;
-}
+Quick Sort:
+- partitioning (median of three, Lomuto's method)
 
-int partition(std::vector<int>& arr, int start, int stop, int pivot) {
-assert(pivot >= start && pivot <= stop);
-assert(!arr.empty() && start >= 0 && stop < arr.size() && start <= stop);
+Merge Sort:
+- 2-way merge (with a single buffer)
 
-    // Tips:
-    // 1. Переместите опорный элемент в конец области (потом вернем на нужно место)
-    // 2. Заведите переменную "индекс опорного элемента" = начало области (он будет обновляться)
-    // 3. Пройдитесь в цикле по всем индексам (конец исключительно) и произведите разбиение,
-    //    передвигая "индекс опорного элемента" в определенных случая вправо.
-    // 4. По завершении цикла в "индексе опорного элемента" находится значение корректной позиции для опорного элемента,
-    //    переместите опорный элемент на корректную позицию.
+Heap Sort:
+- building max heap (heapify)
+- sorting (extracting roots)
 
-    // значение опорного элемента
-    const int pivot_value = arr[pivot];
+## 3. Инструкции
 
-    // переместить опорный элемент в конец (чтобы не мешался)
-    std::swap(arr[pivot], arr[stop]);
+1. Склонируйте локальную копию репозитория к себе на компьютер.
+2. Внесите информацию о себе в раздел "Информация о студенте".
+3. Подробно изучите описание задания. При наличии вопросов обратитесь к <strike>врачу</strike> преподавателю.
+4. Реализуйте задание в соответствии указанным требованиям.
+5. Запустите локальные тесты (при их наличии).
+6. Отправьте задание на auto-grading тесты и дождитесь итогового балла.
+7. Повторите пункты 4-6 до получения макс. кол-ва баллов.
 
-    // индекс опорного элемента (будет вычисляться далее, изначально находится в начале области)
-    int curr_pivot_index = start;
+## 4. Ограничения
 
-    // вычисление индекса опорного элемента и перемещение элементов по правилу разбиения
-    for (int index = start; index < stop; index++) {
+- Запрещается вносить изменения в файлы, не указанных в разделе "Описание задания".
+- Запуск auto-grading тестов осуществляется:
+  - автоматически при внесении изменений в [_src_](src) и/или [_include_](include)
+  на ветках _**master**_ или _**main**_;
+  - вручную во вкладке _Actions_.
 
-      if (arr[index] < pivot_value) {
-        // Напишите здесь ваш код ...
-        std::swap(arr[index], arr[curr_pivot_index]);
-        curr_pivot_index++;
-      }
-    }
+## 5. Примечания
 
-    // разбиение завершилось, перемещаем выбранный опорный элемент на вычисленное ранее место
-    std::swap(arr[curr_pivot_index], arr[stop]);
+- Результирующие баллы высчитываются при каждом новом push'е (для последнего commit'а).
+- По истечении установленных временных сроков сдачи система продолжит высчитывать итоговый балл при внесении изменений.
+- Сроки сдачи устанавливаются преподавателем и указываются в индивидуальном порядке для каждой группы.
+- Тесты подразделяются на **локальные** и **auto-grading**:
+  - локальные тесты запускаются на компьютере через среду разработки (IDE);
+  - auto-grading тесты запускаются на GitHub и вычисляют итоговый балл за задание.
+- При клонировании репозитория через терминал используйте команду: 
+  ```shell
+    git clone --recurse-submodules <URL>
+  ```
 
-    // возвращаем индекс опорного элемента
-    return curr_pivot_index; /* здесь что-то не так ... */;
-}
+---
 
-}  // namespace assignment
+**Преподаватель**: Рамиль Сафин (Telegram: [_@safin_ramil_](https://t.me/safin_ramil), e-mail: _safin.ramil@it.kfu.ru_).
